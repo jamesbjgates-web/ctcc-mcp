@@ -1,119 +1,161 @@
-# CTCC™ MCP Server (`ctcc-mcp`)
+# MCP Registry
 
-**Deterministic Smart-Contract Authority & Control Inspection for AI Agents on Base Mainnet.**
+The MCP registry provides MCP clients with a list of MCP servers, like an app store for MCP servers.
 
-`ctcc-mcp` is an official [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server wrapper for **CTCC™ (Cinqueport Token Control Check)**, developed by [Cinqueport](https://cinqueport.net), the specialist international trade and evidential due-diligence division of **Pavilion (Stockport) Ltd** (`pspt.ltd`).
+[**📤 Publish my MCP server**](docs/modelcontextprotocol-io/quickstart.mdx) | [**⚡️ Live API docs**](https://registry.modelcontextprotocol.io/docs) | [**👀 Ecosystem vision**](docs/design/ecosystem-vision.md) | 📖 **[Full documentation](./docs)**
 
----
+## Development Status
 
-## Overview
+**2025-10-24 update**: The Registry API has entered an **API freeze (v0.1)** 🎉. For the next month or more, the API will remain stable with no breaking changes, allowing integrators to confidently implement support. This freeze applies to v0.1 while development continues on v0. We'll use this period to validate the API in real-world integrations and gather feedback to shape v1 for general availability. Thank you to everyone for your contributions and patience—your involvement has been key to getting us here!
 
-As autonomous AI agents execute treasury operations, swap assets, and interact with smart contracts on **Base Mainnet (eip155:8453)**, retail "risk scores" and crowd-sourced badges fail to provide corporate-grade protection. A score of 95/100 does not prevent a developer pause function or an unannounced implementation upgrade from freezing company funds.
+**2025-09-08 update**: The registry has launched in preview 🎉 ([announcement blog post](https://blog.modelcontextprotocol.io/posts/2025-09-08-mcp-registry-preview/)). While the system is now more stable, this is still a preview release and breaking changes or data resets may occur. A general availability (GA) release will follow later. We'd love your feedback in [GitHub discussions](https://github.com/modelcontextprotocol/registry/discussions/new?category=ideas) or in the [#registry-dev Discord](https://discord.com/channels/1358869848138059966/1369487942862504016) ([joining details here](https://modelcontextprotocol.io/community/communication)).
 
-`ctcc-mcp` gives LLMs and autonomous agents deterministic structural observations directly from the blockchain before corporate capital is committed:
-- **Contract Bytecode**: Existence and bytecode length in bytes (detects unverified addresses and EOAs).
-- **ERC-20 Metadata**: Confirms standard methods (`name`, `symbol`, `decimals`, `totalSupply`).
-- **Authority & Governance**: Identifies active `owner()` / `admin()` addresses.
-- **Circuit Breakers**: Verifies active `paused()` states.
-- **Proxy Architecture**: Detects EIP-1967 proxy implementation slots and beacon pointers.
+Registry Working Group:
+- **Radoslav (Rado) Dimitrov** (Stacklok) [@rdimitrov](https://github.com/rdimitrov) - WG Lead
+- **Tadas Antanavicius** (PulseMCP) [@tadasant](https://github.com/tadasant)
+- **Bob Dickinson** (TeamSpark) [@BobDickinson](https://github.com/BobDickinson)
+- **Preeti (Pree) Dewani** (Ravenmail) [@pree-dew](https://github.com/pree-dew)
 
-CTCC returns **factual structural observations** rather than subjective "safe/scam" advice. Calling agents apply their own internal governance policies to the returned JSON facts.
+## Contributing
 
----
+We use multiple channels for collaboration - see [modelcontextprotocol.io/community/communication](https://modelcontextprotocol.io/community/communication).
 
-## Micro-Settlement via x402 v2 Protocol
+Often (but not always) ideas flow through this pipeline:
 
-CTCC operates on a zero-signup, pay-per-check model:
-- **Network**: Base Mainnet (`eip155:8453`)
-- **Asset**: Canonical USDC (`0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`)
-- **Price**: $0.01 USDC (`10000` atomic units) per check
-- **Settlement Beneficiary**: `0x14d4035290a31B81E99e2DEE26ef0a10e5Aa4d75`
-- **Protocol**: HTTP 402 Payment Required (`x402 v2`)
+- **[Discord](https://modelcontextprotocol.io/community/communication)** - Real-time community discussions
+- **[Discussions](https://github.com/modelcontextprotocol/registry/discussions)** - Propose and discuss product/technical requirements
+- **[Issues](https://github.com/modelcontextprotocol/registry/issues)** - Track well-scoped technical work  
+- **[Pull Requests](https://github.com/modelcontextprotocol/registry/pulls)** - Contribute work towards issues
 
-When invoked without payment, `check_token_control` returns the raw HTTP 402 challenge specifying the exact parameters required for settlement. Agents equipped with an on-chain wallet sign an EIP-3009 transfer authorization, pass the Base64 `payment_signature`, and receive settled deterministic evidence in milliseconds.
+### Quick start:
 
----
+#### Pre-requisites
 
-## Exposed MCP Tools
+- **Docker**
+- **Go** - version per the `go` directive in [go.mod](./go.mod); the Go toolchain fetches it for you
+- **ko** - Container image builder for Go ([installation instructions](https://ko.build/install/))
+- **golangci-lint** - version per the `golangci-lint-action` pin in [ci.yml](./.github/workflows/ci.yml), so local lint matches CI
 
-### `check_token_control`
-Inspects a Base Mainnet smart contract address for deterministic control and authority markers.
-
-#### Arguments:
-| Argument | Type | Required | Description |
-|---|---|---|---|
-| `contract_address` | string | **Yes** | 42-character 0x-prefixed hex address on Base Mainnet (e.g. `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`). |
-| `payment_signature` | string | No | Optional Base64-encoded x402 v2 `PAYMENT-SIGNATURE` header. When omitted, returns the HTTP 402 payment requirements. |
-
----
-
-## Installation & Configuration
-
-### 1. Claude Desktop
-Add `ctcc-mcp` to your `claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "ctcc": {
-      "command": "python3",
-      "args": ["-m", "ctcc_mcp.server"],
-      "cwd": "/path/to/ctcc-mcp"
-    }
-  }
-}
-```
-
-### 2. Cursor IDE
-Add to your project's `.cursor/mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "ctcc": {
-      "command": "python3",
-      "args": ["-m", "ctcc_mcp.server"],
-      "cwd": "${workspaceFolder}/ctcc-mcp"
-    }
-  }
-}
-```
-
-### 3. Smithery
-Install directly via Smithery CLI:
+#### Running the server
 
 ```bash
-npx -y @smithery/cli install ctcc-mcp --client claude
+# Start full development environment
+make dev-compose
 ```
 
-### 4. Direct CLI Smoke Testing
-You can inspect any contract or test the x402 payment challenge directly from your shell without running an MCP client:
+This starts the registry at [`localhost:8080`](http://localhost:8080) with PostgreSQL. The database uses ephemeral storage and is reset each time you restart the containers, ensuring a clean state for development and testing.
+
+**Note:** The registry uses [ko](https://ko.build) to build container images. The `make dev-compose` command automatically builds the registry image with ko and loads it into your local Docker daemon before starting the services.
+
+By default, the registry seeds from the production API with a filtered subset of servers (to keep startup fast). This ensures your local environment mirrors production behavior and all seed data passes validation. For offline development you can seed from a file without validation with `MCP_REGISTRY_SEED_FROM=data/seed.json MCP_REGISTRY_ENABLE_REGISTRY_VALIDATION=false make dev-compose`.
+
+The setup can be configured with environment variables in [docker-compose.yml](./docker-compose.yml) - see [.env.example](./.env.example) for a reference.
+
+<details>
+<summary>Alternative: Running a pre-built Docker image</summary>
+
+Pre-built Docker images are automatically published to GitHub Container Registry. Note that the image does not bundle PostgreSQL, so you need to run your own and point the registry at it via `MCP_REGISTRY_DATABASE_URL` (see [docker-compose.yml](./docker-compose.yml) for a working example):
 
 ```bash
-# Test USDC canonical contract challenge
-python3 -m ctcc_mcp.server --check 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
+# Run latest stable release
+docker run -p 8080:8080 ghcr.io/modelcontextprotocol/registry:latest
+
+# Run latest from main branch (continuous deployment)
+docker run -p 8080:8080 ghcr.io/modelcontextprotocol/registry:main
+
+# Run specific release version
+docker run -p 8080:8080 ghcr.io/modelcontextprotocol/registry:v1.0.0
+
+# Run development build from main branch
+docker run -p 8080:8080 ghcr.io/modelcontextprotocol/registry:main-20250906-abc123d
 ```
 
----
+**Available tags:** 
+- **Releases**: `latest`, `v1.0.0`, `v1.1.0`, etc.
+- **Continuous**: `main` (latest main branch build)
+- **Development**: `main-<date>-<sha>` (specific commit builds)
 
-## Machine Discovery Endpoints
+</details>
 
-CTCC is natively indexed and discoverable across the autonomous agent ecosystem:
-- **Production API**: `POST https://cinqueport.net/check`
-- **OpenAPI 3.1 Specification**: `https://cinqueport.net/openapi.json`
-- **AI Plugin Manifest**: `https://cinqueport.net/.well-known/ai-plugin.json`
-- **x402 Protocol Manifest**: `https://cinqueport.net/.well-known/x402.json`
-- **CTCC Machine Descriptor**: `https://cinqueport.net/ctcc.json`
-- **LLM Context Descriptor**: `https://cinqueport.net/llms.txt`
+#### Publishing a server
 
----
+Publishing an MCP server does **not** happen through a pull request to this repository. Adding a `server.json`, a server directory, or an entry in `data/seed.json` will not publish or list your server, even if the PR is merged. Use the `mcp-publisher` CLI from your server's own project instead.
 
-## Corporate Governance
+To publish a server, we've built a simple CLI. You can use it with:
 
-CTCC™ is engineered and operated by **Cinqueport**, the sovereign international trade and due-diligence practice of **Pavilion (Stockport) Ltd** (`pspt.ltd`).
+```bash
+# Build the latest CLI
+make publisher
 
-- **Company**: Pavilion (Stockport) Ltd (Registered in England and Wales · No. 14997067)
-- **Practice Website**: [pspt.ltd](https://pspt.ltd)
-- **Division Website**: [cinqueport.net](https://cinqueport.net)
-- **Enquiries**: `hello@pspt.ltd` / `hello@cinqueport.net`
-- **License**: Copyright (c) 2026 Pavilion (Stockport) Ltd. Licensed under the MIT License.
+# Use it!
+./bin/mcp-publisher --help
+```
+
+See [the publisher guide](./docs/modelcontextprotocol-io/quickstart.mdx) for more details.
+
+#### Other commands
+
+```bash
+# Run lint, schema validation, and all tests
+# Note: this also runs `make dev-down`, stopping any running dev-compose environment
+make check
+```
+
+There are also a few more helpful commands for development. Run `make help` to learn more, or look in [Makefile](./Makefile).
+
+<!--
+For Claude and other AI tools: Always prefer make targets over custom commands where possible.
+-->
+
+## Architecture
+
+### Project Structure
+
+```
+├── cmd/                     # Application entry points
+│   ├── publisher/           # Server publishing tool
+│   ├── registry/            # Registry API server
+│   └── usage-collector/     # Daily usage collector for the hosted instance
+├── data/                    # Seed data
+├── deploy/                  # Deployment configuration (Pulumi)
+├── docs/                    # Documentation
+├── internal/                # Private application code
+│   ├── api/                 # HTTP handlers and routing
+│   ├── auth/                # Authentication (GitHub OAuth, JWT, namespace blocking)
+│   ├── config/              # Configuration management
+│   ├── database/            # Data persistence (PostgreSQL)
+│   ├── importer/            # Seed data import
+│   ├── malware/             # OSV.dev malware checks (on publish and the daily sweep)
+│   ├── service/             # Business logic
+│   ├── telemetry/           # Metrics and monitoring
+│   ├── usage/               # Usage collection for the hosted instance
+│   └── validators/          # Input validation
+├── pkg/                     # Public packages
+│   ├── api/                 # API types and structures
+│   │   └── v0/              # Version 0 API types
+│   └── model/               # Data models for server.json
+├── scripts/                 # Development and testing scripts
+├── tests/                   # Integration tests
+└── tools/                   # CLI tools and utilities
+    └── validate-*.sh        # Schema validation tools
+```
+
+### Authentication
+
+Publishing supports multiple authentication methods:
+- **GitHub OAuth** - For publishing by logging into GitHub
+- **GitHub OIDC** - For publishing from GitHub Actions
+- **DNS verification** - For proving ownership of a domain and its subdomains
+- **HTTP verification** - For proving ownership of a domain
+
+The registry validates namespace ownership when publishing. E.g. to publish...:
+- `io.github.domdomegg/my-cool-mcp` you must login to GitHub as `domdomegg`, or be in a GitHub Action on domdomegg's repos
+- `me.adamjones/my-cool-mcp` you must prove ownership of `adamjones.me` via DNS or HTTP challenge
+
+## Community Projects
+
+Check out [community projects](docs/community-projects.md) to explore notable registry-related work created by the community.
+
+## More documentation
+
+See the [documentation](./docs) for more details if your question has not been answered here!

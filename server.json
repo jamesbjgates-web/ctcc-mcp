@@ -1,0 +1,29 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.jamesbjgates-web/ctcc-mcp",
+  "description": "Deterministic smart-contract authority and control inspection on Base Mainnet via x402 v2.",
+  "repository": {
+    "url": "https://github.com/jamesbjgates-web/ctcc-mcp",
+    "source": "github",
+    "id": "1468033770"
+  },
+  "version": "1.0.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "ctcc-mcp",
+      "version": "1.0.0",
+      "transport": {
+        "type": "stdio"
+      }
+    },
+    {
+      "registryType": "npm",
+      "identifier": "ctcc-mcp",
+      "version": "1.0.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
