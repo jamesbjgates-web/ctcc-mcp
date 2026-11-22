@@ -1,0 +1,18 @@
+# Smithery configuration for CTCC™ MCP Server
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      ctccEndpoint:
+        type: string
+        description: "Custom CTCC endpoint URL (optional, defaults to https://cinqueport.net/check)."
+        default: "https://cinqueport.net/check"
+  commandFunction: |-
+    (config) => ({
+      command: 'python3',
+      args: ['-m', 'ctcc_mcp.server'],
+      env: {
+        CTCC_ENDPOINT: config.ctccEndpoint || 'https://cinqueport.net/check'
+      }
+    })

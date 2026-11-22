@@ -1,0 +1,38 @@
+{
+  "name": "ctcc-mcp",
+  "version": "1.0.0",
+  "description": "Cinqueport Token Control Check (CTCC™) Model Context Protocol (MCP) server for deterministic Base Mainnet smart-contract inspection via x402 v2 micropayments.",
+  "main": "bin/ctcc-mcp.js",
+  "bin": {
+    "ctcc-mcp": "./bin/ctcc-mcp.js"
+  },
+  "scripts": {
+    "start": "python3 -m ctcc_mcp.server",
+    "test": "python3 -m unittest discover tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamesbjgates-web/ctcc-mcp.git"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "smithery",
+    "glama",
+    "pulsemcp",
+    "x402",
+    "base",
+    "base-mainnet",
+    "ai-agents",
+    "smart-contracts",
+    "ctcc",
+    "cinqueport",
+    "pavilion"
+  ],
+  "author": "Cinqueport <hello@pspt.ltd> (https://cinqueport.net)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://cinqueport.net/contact.html"
+  },
+  "homepage": "https://cinqueport.net/#ctcc"
+}

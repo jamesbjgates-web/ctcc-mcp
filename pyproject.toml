@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ctcc-mcp"
+version = "1.0.0"
+description = "Cinqueport Token Control Check (CTCC™) MCP Server for deterministic smart-contract authority inspection on Base Mainnet via x402 v2 micropayments."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+  { name = "Cinqueport", email = "hello@pspt.ltd" }
+]
+keywords = [
+  "mcp",
+  "model-context-protocol",
+  "base",
+  "base-mainnet",
+  "x402",
+  "ai-agents",
+  "smart-contracts",
+  "blockchain-security",
+  "ctcc",
+  "cinqueport",
+  "pavilion"
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence"
+]
+
+[project.urls]
+Homepage = "https://cinqueport.net"
+Documentation = "https://cinqueport.net/openapi.json"
+Repository = "https://github.com/jamesbjgates-web/ctcc-mcp"
+Issues = "https://github.com/jamesbjgates-web/ctcc-mcp/issues"
+
+[project.scripts]
+ctcc-mcp = "ctcc_mcp.server:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ctcc_mcp*"]
