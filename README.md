@@ -120,6 +120,13 @@ CTCC is natively indexed and discoverable across the autonomous agent ecosystem:
 - **CTCC Machine Descriptor**: `https://cinqueport.net/ctcc.json`
 - **LLM Context Descriptor**: `https://cinqueport.net/llms.txt`
 
+## Official SDKs & Agent Discovery
+
+- **Python SDK:** [`ctcc-x402`](https://pypi.org/project/ctcc-x402/) (`pip install ctcc-x402`)
+- **TypeScript SDK:** [`@cinqueport/ctcc-x402`](https://www.npmjs.com/package/@cinqueport/ctcc-x402) (`npm install @cinqueport/ctcc-x402`)
+- **ElizaOS Plugin:** [`@cinqueport/plugin-ctcc`](https://www.npmjs.com/package/@cinqueport/plugin-ctcc)
+- **A2A Agent Card:** `https://cinqueport.net/.well-known/agent.json`
+- **OpenAPI 3.1 Spec:** `https://cinqueport.net/openapi.json`
 ---
 
 ## Corporate Governance
