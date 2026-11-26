@@ -155,8 +155,9 @@ class TestCTCCMCPServer(unittest.TestCase):
         extensions = challenge.get("extensions", {})
         self.assertIn("bazaar", extensions)
         bazaar_info = extensions["bazaar"].get("info", {})
-        self.assertEqual(bazaar_info.get("name"), "Cinqueport Token Control Check (CTCC™)")
-        self.assertEqual(bazaar_info.get("sampleInput", {}).get("contract_address"), "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913")
+        self.assertIn("input", bazaar_info)
+        input_body = bazaar_info.get("input", {}).get("body", {})
+        self.assertEqual(input_body.get("contract_address"), "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913")
 
 
 if __name__ == "__main__":

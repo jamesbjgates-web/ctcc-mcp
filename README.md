@@ -110,11 +110,21 @@ python3 -m ctcc_mcp.server --check 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
 
 ---
 
+## Official SDKs & Framework Adapters
+
+In addition to this MCP server, official client libraries and agent adapters are published:
+- **Python SDK**: [`ctcc-x402`](https://pypi.org/project/ctcc-x402/) (`pip install ctcc-x402`) - Sync & async client with built-in in-memory caching and automatic x402 payment signing.
+- **TypeScript / Node.js SDK**: [`@cinqueport/ctcc-x402`](https://www.npmjs.com/package/@cinqueport/ctcc-x402) (`npm install @cinqueport/ctcc-x402`) - Fully typed ESM/CJS client for Node.js, Next.js, and browser runtimes.
+- **ElizaOS Agent Plugin**: [`@cinqueport/plugin-ctcc`](https://www.npmjs.com/package/@cinqueport/plugin-ctcc) (`npm install @cinqueport/plugin-ctcc`) - Drop-in autonomous action plugin for ElizaOS agent swarms.
+
+---
+
 ## Machine Discovery Endpoints
 
 CTCC is natively indexed and discoverable across the autonomous agent ecosystem:
-- **Production API**: `POST https://cinqueport.net/check`
+- **A2A Agent Card (Google / Agent Protocol)**: `https://cinqueport.net/.well-known/agent.json`
 - **OpenAPI 3.1 Specification**: `https://cinqueport.net/openapi.json`
+- **Production API Endpoint**: `POST https://cinqueport.net/check`
 - **AI Plugin Manifest**: `https://cinqueport.net/.well-known/ai-plugin.json`
 - **x402 Protocol Manifest**: `https://cinqueport.net/.well-known/x402.json`
 - **CTCC Machine Descriptor**: `https://cinqueport.net/ctcc.json`
