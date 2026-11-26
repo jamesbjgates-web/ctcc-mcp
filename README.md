@@ -138,3 +138,10 @@ CTCC™ is engineered and operated by **Cinqueport**, the sovereign internationa
 - **Division Website**: [cinqueport.net](https://cinqueport.net)
 - **Enquiries**: `hello@pspt.ltd` / `hello@cinqueport.net`
 - **License**: Copyright (c) 2026 Pavilion (Stockport) Ltd. Licensed under the MIT License.
+## Official SDKs & Agent Discovery
+
+- **Python SDK:** [`ctcc-x402`](https://pypi.org/project/ctcc-x402/) (`pip install ctcc-x402`)
+- **TypeScript SDK:** [`@cinqueport/ctcc-x402`](https://www.npmjs.com/package/@cinqueport/ctcc-x402) (`npm install @cinqueport/ctcc-x402`)
+- **ElizaOS Plugin:** [`@cinqueport/plugin-ctcc`](https://www.npmjs.com/package/@cinqueport/plugin-ctcc)
+- **A2A Agent Card:** `https://cinqueport.net/.well-known/agent.json`
+- **OpenAPI 3.1 Spec:** `https://cinqueport.net/openapi.json`
