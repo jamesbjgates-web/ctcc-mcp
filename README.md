@@ -1,5 +1,7 @@
 # CTCC™ MCP Server (`ctcc-mcp`)
 
+[![Ctcc MCP server](https://mcprush.com/badge/ctcc-mcp/card.svg)](https://mcprush.com/to/ctcc-mcp?ref=badge)
+
 **Deterministic Smart-Contract Authority & Control Inspection for AI Agents on Base Mainnet.**
 
 `ctcc-mcp` is an official [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server wrapper for **CTCC™ (Cinqueport Token Control Check)**, developed by [Cinqueport](https://cinqueport.net), the specialist international trade and evidential due-diligence division of **Pavilion (Stockport) Ltd** (`pspt.ltd`).
